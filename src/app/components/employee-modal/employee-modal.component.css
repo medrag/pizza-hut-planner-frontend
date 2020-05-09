@@ -1,0 +1,19 @@
+h4 {
+  color: green;
+  font-weight: bold;
+  color: #7986cb;
+}
+
+.close {
+  color: red;
+  font-size: 2rem !important;
+}
+
+label {
+  font-weight: bold;
+  color: #9fa8da;
+}
+
+.modal-body p {
+  text-align: center;
+}

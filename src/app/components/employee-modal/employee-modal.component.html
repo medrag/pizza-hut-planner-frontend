@@ -1,0 +1,177 @@
+<!-- modal template for delete action -->
+<ng-template [ngIf]="modalAction === 'delete'">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmation de suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Voulez-vous supprimer <b>{{employee.nomComplet}}</b> ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" (click)="deleteEmployee()">Confirmer</button>
+    <button type="button" class="btn btn-outline-danger" type="reset" (click)="onReset()">Annuler</button>
+  </div>
+</ng-template>
+
+<!-- modal template for add and edit action -->
+<ng-template [ngIf]="modalAction === 'add' || modalAction === 'edit'">
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="modalAction === 'add'">Ajout nouveau employé(e)</h4>
+    <h4 class="modal-title" *ngIf="modalAction === 'edit'">Modification employé(e)</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="employeeForm" (ngSubmit)="addEditEmployee()">
+
+      <div class="form-group">
+        <label for="name">Nom complet</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-user"></i></div>
+          </div>
+          <input type="text" class="form-control" id="name" formControlName="nomComplet"
+                 [ngClass]="{ 'is-invalid': submitted && f.nomComplet.errors }">
+          <div *ngIf="submitted && f.nomComplet.errors" class="invalid-feedback">
+            <div *ngIf="f.nomComplet.errors.required">Champ requis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dateEntree">Date de naissance</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-birthday-cake"></i></div>
+          </div>
+          <input type="date" class="form-control" id="dateNaissance" formControlName="dateNaissance">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contrat">Contrat (en heures)</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-file-contract"></i></div>
+          </div>
+          <input type="text" class="form-control" id="contrat" formControlName="contrat"
+                 [ngClass]="{ 'is-invalid': submitted && f.contrat.errors }">
+          <div *ngIf="submitted && f.contrat.errors" class="invalid-feedback">
+            <div *ngIf="f.contrat.errors.required">Champ requis</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="poste">Poste</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="far fa-id-card"></i></div>
+          </div>
+          <select class="form-control" id="poste" formControlName="poste"
+                  [ngClass]="{ 'is-invalid': submitted && f.qualification.errors }">
+            <option value="" disabled>Choisir le poste</option>
+            <option>Manager</option>
+            <option>Responsable</option>
+            <option>Livreur</option>
+            <option>Polyvalent</option>
+            <option>Autre</option>
+          </select>
+          <div *ngIf="submitted && f.qualification.errors" class="invalid-feedback">
+            <div *ngIf="f.qualification.errors.required">Champ requis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="magasin">Magasin</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-store-alt"></i></div>
+          </div>
+          <select class="form-control" id="magasin" formControlName="magasin"
+                  [ngClass]="{ 'is-invalid': submitted && f.magasin.errors }" [compareWith]="compareFn">
+            <option value="" disabled>Choisir le magasin</option>
+            <option [ngValue]="magasin" *ngFor="let magasin of magasinsList">{{magasin.nom}}</option>
+          </select>
+          <div *ngIf="submitted && f.magasin.errors" class="invalid-feedback">
+            <div *ngIf="f.magasin.errors.required">Champ requis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dateEntree">Date d'entrée</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
+          </div>
+          <input type="date" class="form-control" id="dateEntree" formControlName="dateEntree"
+                 [ngClass]="{ 'is-invalid': submitted && f.dateEntree.errors }">
+          <div *ngIf="submitted && f.dateEntree.errors" class="invalid-feedback">
+            <div *ngIf="f.dateEntree.errors.required">Champ requis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-at"></i></div>
+          </div>
+          <input type="email" class="form-control" id="email" formControlName="mail"
+                 [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Champ requis</div>
+            <div *ngIf="f.email.errors.email">Format d'email invalide</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tel">Téléphone</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-phone-alt"></i></div>
+          </div>
+          <input type="text" class="form-control" id="tel" formControlName="tel"
+                 [ngClass]="{ 'is-invalid': submitted && f.tel.errors }">
+          <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
+            <div *ngIf="f.tel.errors.required">Champ requis</div>
+            <div *ngIf="f.tel.errors.minlength">Format de tel. incorrect</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="adress">Adresse</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+          </div>
+          <textarea class="form-control" id="adress" rows="2" formControlName="adresse"
+                    [ngClass]="{ 'is-invalid': submitted && f.adresse.errors }"></textarea>
+          <div *ngIf="submitted && f.adresse.errors" class="invalid-feedback">
+            <div *ngIf="f.adresse.errors.required">Champ requis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Sauvegarder</button>
+        <button type="button" class="btn btn-outline-danger" type="reset" (click)="onReset()">Fermer</button>
+      </div>
+    </form>
+
+  </div>
+</ng-template>
+
+
+
+
+

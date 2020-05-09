@@ -1,0 +1,27 @@
+/* Structure */
+table {
+  border: 1px solid grey;
+}
+
+.table th, td {
+  text-align: center;
+  border: 1px solid grey;
+  vertical-align: middle;
+}
+
+.planning-title {
+  text-align: center;
+  color: cornflowerblue;
+  margin-bottom: 20px;
+}
+
+.btn-action {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+table td input[type='time']:first-child {
+  margin-bottom: 10px;
+}
