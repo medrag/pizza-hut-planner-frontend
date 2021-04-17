@@ -1,7 +1,19 @@
 .ph-logo {
-  width: 60px;
+  height: 50px;
+}
+
+a.navbar-brand {
+  color: #e75253;
+}
+
+nav {
+  background-color: #e3e3eb;
 }
 
 ul {
   font-weight: bold;
+}
+
+div.collapse ul li a {
+  color: #e75253;
 }

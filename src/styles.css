@@ -11,3 +11,20 @@ body {
   display:none;
   visibility:hidden;
 }
+
+.page-title {
+  color: black;
+  font-family: 'Lobster';
+  font-weight: bold;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+  text-align: left;
+  display: flex;
+  align-items: center !important;
+  font-weight: bold !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter label input {
+  width: 20%;
+}

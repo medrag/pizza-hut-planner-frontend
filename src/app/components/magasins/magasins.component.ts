@@ -4,6 +4,7 @@ import {MagasinModalComponent} from '../magasin-modal/magasin-modal.component';
 import {Magasin} from '../../models/magasin';
 import {MagasinService} from '../../services/magasin.service';
 import {Subject} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-magasins',
@@ -16,17 +17,25 @@ export class MagasinsComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private modalService: NgbModal, private magasinService: MagasinService) {
-  }
+  constructor(private modalService: NgbModal,
+              private magasinService: MagasinService,
+              private router: Router) {}
 
   ngOnInit() {
     this.dtOptions = {
       paging: false,
       processing: true,
       ordering: false,
+      stateSave: true,
+      lengthChange: false,
       info: false,
+      dom: 'lfrtp',
       language: {
         url: '/assets/resources/datatable-french.json'
+      },
+      autoWidth: false,
+      initComplete() {
+        $('.dataTables_wrapper').css('width', '80%');
       }
     };
 
@@ -76,8 +85,11 @@ export class MagasinsComponent implements OnInit, OnDestroy {
     }
   }
 
+  openPlanning(magasinId: number, magasinNom: string) {
+    this.router.navigate(['planning/' + magasinId + '/' + magasinNom]);
+  }
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
-
 }

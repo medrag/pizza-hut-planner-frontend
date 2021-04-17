@@ -1,7 +1,7 @@
 import {Base} from './template/Base';
-import {Jour} from './jour';
+import {Employee} from './employee';
 
 export class Planning extends Base {
   semaine: string;
-  jours: Jour[];
+  employee: Employee;
 }

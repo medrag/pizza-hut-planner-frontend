@@ -1,0 +1,51 @@
+<div class="btn-action">
+  <button class="btn btn-outline-info" (click)="back()"><i class="fas fa-backward"></i> Retour</button>
+  <div class="table-actions">
+    <button class="btn btn-primary" (click)="savePlanning()"><i class="fas fa-save"></i> Sauvegarder</button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+      <th rowspan="2">Poste</th>
+      <th rowspan="2">Employé(e)</th>
+      <th rowspan="2">Contrat</th>
+      <th colspan="3" *ngFor="let day of weekDays">{{day}}</th>
+      <th rowspan="2">Heures planifièes</th>
+      <th rowspan="2">Total astreinte</th>
+      <th rowspan="2">Coupure</th>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of weekDays">
+        <td *ngFor="let periode of periodes">{{periode.nom}}</td>
+      </ng-container>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td rowspan="1">{{employee.poste}}</td>
+      <td>{{employee.nomComplet}}</td>
+      <td>{{employee.contrat}}h</td>
+      <ng-container *ngFor="let day of weekDays">
+        <td *ngFor="let periode of periodes">
+          <select #planifier id="{{day + periode.nom + employee.id}}"
+                  (change)="changeSelectValue(planifier.value, periode.nom, day)">
+            <option value="" disabled>...</option>
+            <option>SS</option>
+            <option>CP</option>
+            <option>CRS</option>
+            <option>AI</option>
+            <option>AJ</option>
+            <option>HM</option>
+          </select>
+        </td>
+      </ng-container>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

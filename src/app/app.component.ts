@@ -13,6 +13,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.navigate(['planning']);
+    this.router.navigate(['magasins']);
   }
 }

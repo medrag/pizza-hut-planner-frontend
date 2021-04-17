@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {EmployeePlanning} from '../models/employee-planning';
+import {Planning} from '../models/planning';
+import {PlanningPostWrapper} from '../models/planningPostWrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class EmployeePlanningService {
 
   private planningAPIUrl = 'http://localhost:8092/pizza-hut/api/plannings';
 
-  public getEmployeesPlanning() {
-    return this.http.get<EmployeePlanning[]>(this.planningAPIUrl + '/employees');
+  public saveEmployeePlannning(planningPostWrapper: PlanningPostWrapper) {
+    return this.http.post<Planning>(this.planningAPIUrl + '/save', planningPostWrapper);
   }
 }

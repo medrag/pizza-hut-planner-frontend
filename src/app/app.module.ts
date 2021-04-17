@@ -15,7 +15,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {EmployeeService} from './services/employee.service';
 import {MagasinService} from './services/magasin.service';
 import {DataTablesModule} from 'angular-datatables';
-import {EmployeePlanningService} from './services/employee-planning.service';
+import { PlanningEmployeeComponent } from './components/planning-employee/planning-employee.component';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {EmployeePlanningService} from './services/employee-planning.service';
     EmployeesComponent,
     EmployeeModalComponent,
     MagasinsComponent,
-    MagasinModalComponent
+    MagasinModalComponent,
+    PlanningEmployeeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import {EmployeePlanningService} from './services/employee-planning.service';
     DataTablesModule,
   ],
   entryComponents: [EmployeeModalComponent, MagasinModalComponent],
-  providers: [EmployeeService, MagasinService, EmployeePlanningService],
+  providers: [EmployeeService, MagasinService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

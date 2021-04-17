@@ -1,9 +1,20 @@
 <div class="planning-title">
-  <h1>Planning prévisionnel de la semaine {{currentWeekNumber}}</h1>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Planning semaine {{currentWeekNumber}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">du {{weekDays[0]}} au {{weekDays[6]}}</h6>
+      <p class="card-text">{{magasinNom}}</p>
+    </div>
+  </div>
 </div>
 
 <div class="btn-action">
-  <button class="btn btn-primary"><i class="fas fa-save"></i> Sauvegarder</button>
+  <button class="btn btn-outline-info" (click)="back()"><i class="fas fa-backward"></i> Retour</button>
+  <div class="table-actions">
+    <button class="btn btn-secondary"><i class="fas fa-print"></i> Imprimer</button>
+    <button class="btn btn-primary" (click)="savePlanning()"><i class="fas fa-save"></i> Sauvegarder</button>
+  </div>
+
 </div>
 
 <div class="table-responsive">
@@ -20,36 +31,53 @@
     </tr>
     <tr>
       <ng-container *ngFor="let day of weekDays">
-        <td>Matin</td>
-        <td>Soir</td>
-        <td>Astreinte</td>
+        <td *ngFor="let periode of periodes">{{periode.nom}}</td>
       </ng-container>
     </tr>
     </thead>
-
     <tbody>
-    <tr>
-      <td rowspan="1">{{employee.poste}}</td>
-      <td>{{employee.nomComplet}}</td>
-      <td>{{employee.contrat}}h</td>
+    <ng-container *ngFor="let employee of employees">
+      <tr>
+        <td rowspan="1">{{employee.poste}}</td>
+        <td>{{employee.nomComplet}}</td>
+        <td>{{employee.contrat}}h</td>
 
-      <!--1st col-->
-      <ng-container *ngFor="let jours of planning.jours">
-        <ng-container *ngFor="let periodes of jours.periodes">
-          <td>
-            <input type="time" value="{{periodes.dateDebut}}"/>
-            <input type="time" value="{{periodes.dateFin}}"/>
-          </td>
-        </ng-container>
-      </ng-container>
 
-      <td>38</td>
-      <td>2</td>
-      <td>0</td>
-    </tr>
+        <ng-container *ngIf="employee.plannings.length > 0; then planningTemplate else weekTemplate"></ng-container>
+
+        <ng-template #planningTemplate>
+          <ng-container *ngFor="let jour of employee.plannings[0].jours">
+            <td *ngFor="let periode of jour.periodes">
+              <input type="time" value="{{periode.dateDebut}}" disabled/>
+              <input type="time" value="{{periode.dateFin}}" disabled/>
+            </td>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #weekTemplate>
+          <ng-container *ngFor="let day of weekDays">
+            <td *ngFor="let periode of periodes">
+              <select #planifier id="{{day + periode.nom + employee.id + magasinId}}"
+                      (change)="changeToInputTime(planifier.id, planifier.value, periode, day, employee)">
+                <option value="" disabled>...</option>
+                <option>SS</option>
+                <option>CP</option>
+                <option>CRS</option>
+                <option>AI</option>
+                <option>AJ</option>
+                <option>HM</option>
+              </select>
+            </td>
+          </ng-container>
+        </ng-template>
+
+
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+    </ng-container>
     </tbody>
   </table>
 </div>
-
-
 

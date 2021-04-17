@@ -1,0 +1,23 @@
+/* Structure */
+table {
+  border: 1px solid grey;
+}
+
+.table th, td {
+  text-align: center;
+  border: 1px solid grey;
+  vertical-align: middle;
+}
+
+.action-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.btn-action {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}

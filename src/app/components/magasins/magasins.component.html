@@ -1,5 +1,5 @@
 <div class="table-title">
-  <h1>Liste des magasins</h1>
+  <h1 class="page-title">Liste des magasins</h1>
 </div>
 <div class="btn-actions">
   <button class="btn btn-outline-primary btn-add" (click)="openModal('add',null)"><i class="fas fa-store-alt"></i>
@@ -28,8 +28,12 @@
       <td>{{magasin.tel}}</td>
       <td>{{magasin.entreprise}}</td>
       <td class="row-btn-actions">
-        <button class="btn btn-primary" (click)="openModal('edit',magasin)"><i class="fas fa-edit"></i></button>
-        <button class="btn btn-danger" (click)="openModal('delete',magasin)"><i class="fas fa-trash-alt"></i></button>
+        <button class="btn btn-primary" (click)="openModal('edit',magasin)"
+                data-toggle="tooltip" data-placement="top" title="Modifier"><i class="fas fa-edit"></i></button>
+        <button class="btn btn-success" (click)="openPlanning(magasin.id, magasin.nom)"
+                data-toggle="tooltip" data-placement="top" title="Voir plannings"><i class="far fa-calendar-alt"></i></button>
+        <button class="btn btn-danger" (click)="openModal('delete',magasin)"
+                data-toggle="tooltip" data-placement="top" title="Supprimer"><i class="fas fa-trash-alt"></i></button>
       </td>
     </tr>
     </tbody>

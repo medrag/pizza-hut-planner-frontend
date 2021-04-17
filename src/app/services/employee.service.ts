@@ -15,6 +15,10 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.employeeAPIUrl);
   }
 
+  public getEmployeeById(employeeId: number) {
+    return this.http.get<Employee>(this.employeeAPIUrl + '/' + employeeId);
+  }
+
   public addEmployee(employee: Employee) {
     return this.http.post<Employee>(this.employeeAPIUrl + '/ajouter', employee);
   }
@@ -25,5 +29,9 @@ export class EmployeeService {
 
   public deleteEmployee(employeeId: number) {
     return this.http.delete(this.employeeAPIUrl + '/' + employeeId);
+  }
+
+  public getEmployeesByMagasinId(magasinId: number) {
+    return this.http.get<Employee[]>(this.employeeAPIUrl + '/magasin/' + magasinId);
   }
 }

@@ -33,3 +33,22 @@ table.dataTable thead .sorting_desc_disabled:after {
   bottom: 50% !important;
   transform: translate(0,50%);
 }
+
+select {
+  width: auto;
+}
+
+div.magasin-filter {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+div.magasin-filter label {
+  margin-right: 10px;
+  margin-bottom: unset;
+}
+
+div.dataTables_paginate ul.pagination {
+  justify-content: center !important;
+}

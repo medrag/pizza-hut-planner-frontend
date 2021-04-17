@@ -1,7 +1,14 @@
 <div class="table-title">
-  <h1>Liste des employé(e)s</h1>
+  <h1 class="page-title">Liste des employé(e)s</h1>
 </div>
 <div class="btn-actions">
+  <div class="magasin-filter">
+    <label for="magasinFilter" class="font-weight-bold">Filtrer par magasin :</label>
+    <select class="form-control" id="magasinFilter" #magasinSelect (change)="filterEmployees(magasinSelect.value)">
+      <option selected value="0">Tous</option>
+      <option *ngFor="let magasin of magasinsList" value="{{magasin.id}}">{{magasin.nom}}</option>
+    </select>
+  </div>
   <button class="btn btn-outline-primary btn-add" (click)="openModal('add',null)"><i class="fas fa-user-plus"></i>
     Ajouter employé(e)
   </button>
@@ -37,6 +44,7 @@
       <td>{{employee.magasin.nom}}</td>
       <td class="row-btn-actions">
         <button class="btn btn-primary" (click)="openModal('edit',employee)"><i class="fas fa-user-edit"></i></button>
+        <button class="btn btn-success" (click)="openPlanning(employee.id)" data-toggle="tooltip" data-placement="top" title="Planifier {{employee.nomComplet}}"><i class="far fa-calendar-alt"></i></button>
         <button class="btn btn-danger" (click)="openModal('delete',employee)"><i class="fas fa-trash-alt"></i></button>
       </td>
     </tr>

@@ -1,5 +1,6 @@
 import {Base} from './template/Base';
 import {Magasin} from './magasin';
+import {Planning} from './planning';
 
 export class Employee extends Base {
   nomComplet: string;

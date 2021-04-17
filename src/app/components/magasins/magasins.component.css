@@ -1,7 +1,12 @@
 .table-title {
   display: flex;
   justify-content: center;
-  color: cornflowerblue;
+}
+
+.table-title h1 {
+  color: black;
+  font-family: 'Lobster';
+  font-weight: bold;
 }
 
 .btn-actions {
@@ -38,3 +43,4 @@ table.dataTable thead .sorting_desc_disabled:after {
   bottom: 50% !important;
   transform: translate(0,50%);
 }
+

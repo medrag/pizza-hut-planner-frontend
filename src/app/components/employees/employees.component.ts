@@ -4,6 +4,9 @@ import {EmployeeModalComponent} from '../employee-modal/employee-modal.component
 import {EmployeeService} from '../../services/employee.service';
 import {Employee} from '../../models/employee';
 import {Subject} from 'rxjs';
+import {MagasinService} from '../../services/magasin.service';
+import {Magasin} from '../../models/magasin';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-employees',
@@ -15,24 +18,39 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   employeeList: Employee[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  magasinsList: Magasin[] = [];
 
-  constructor(private modalService: NgbModal, private employeeService: EmployeeService) {
+  constructor(private modalService: NgbModal,
+              private employeeService: EmployeeService,
+              private magasinService: MagasinService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.dtOptions = {
-      paging: false,
+      paging: true,
+      pagingType: 'simple_numbers',
+      pageLength: 10,
       ordering: false,
+      stateSave: true,
+      lengthChange: false,
       info: false,
+      dom: 'lfrtp',
       language: {
         url: '/assets/resources/datatable-french.json'
-      }
+      },
+      autoWidth: false
     };
 
     this.employeeService.getEmployees()
       .subscribe(result => {
         this.employeeList = result;
         this.dtTrigger.next();
+      });
+
+    this.magasinService.getMagasins()
+      .subscribe(result => {
+        this.magasinsList = result;
       });
   }
 
@@ -73,6 +91,25 @@ export class EmployeesComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  filterEmployees(selectValue: string) {
+    const magasinId = Number(selectValue);
+    if (magasinId === 0) {
+      this.employeeService.getEmployees()
+        .subscribe( result => {
+          this.employeeList = result;
+        });
+    } else {
+      this.employeeService.getEmployeesByMagasinId(Number(selectValue))
+        .subscribe( result => {
+          this.employeeList = result;
+        });
+    }
+  }
+
+  openPlanning(employeeId: number) {
+    this.router.navigate(['planning/' + employeeId]);
   }
 
   ngOnDestroy(): void {

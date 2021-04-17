@@ -10,6 +10,8 @@ table {
 }
 
 .planning-title {
+  display: flex;
+  justify-content: center;
   text-align: center;
   color: cornflowerblue;
   margin-bottom: 20px;
@@ -19,9 +21,19 @@ table {
   margin-top: 10px;
   margin-bottom: 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 table td input[type='time']:first-child {
   margin-bottom: 10px;
+}
+
+.table-actions button:first-child {
+  margin-right: 10px;
+}
+
+.action-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }

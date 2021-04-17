@@ -1,8 +1,15 @@
 import {Base} from './template/Base';
-import {Periode} from './periode';
+import {Planning} from './planning';
 
 export class Jour extends Base {
   nom: string;
   date: Date;
-  periodes: Periode[];
+  planning: Planning;
+
+  constructor(nom?: string, date?: Date, planning?: Planning) {
+    super();
+    this.nom = nom;
+    this.date = date;
+    this.planning = planning;
+  }
 }
